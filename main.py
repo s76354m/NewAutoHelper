@@ -48,7 +48,7 @@ def submit_problem(problem, selected_call, window, text_widget):
 config_list = [
     {
         "model": "gpt-4-1106-preview",
-        "api_key": "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",
+        "api_key": "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",
     },
 ]
 
@@ -220,7 +220,6 @@ def setup_gui():
     window = tk.Tk()
     window.title("Problem Submission Interface")
     window.geometry("700x600")
-    submit_button.grid(row=1, column=2, padx=(10,0), sticky='e')
 
     # Creating the problem input field
     tk.Label(window, text="Problem:").grid(row=0, column=0, sticky='e')
@@ -239,17 +238,17 @@ def setup_gui():
     response_field = tk.Text(window, height=20, width=80)
     response_field.grid(row=3, column=0, columnspan=3, pady=25, sticky='we')
 
-    # Creating the submit button
-    submit_button = tk.Button(window, text="Submit", command=lambda: submit_problem(
-        problem_entry.get(), 
-        call_methods.get(), 
-        window, 
-        response_field  # Pass the response_field as an argument here
-    ))
-    submit_button.grid(row=1, column=2, padx=(10,0), sticky='e')  # Fixed by replacing pack() with grid()
-
     # Configuring the grid system to allow for responsive resizing
     window.grid_columnconfigure(1, weight=1)
+    
+    # Creating the submit button
+    submit_button = tk.Button(window, text="Submit", command=lambda: submit_problem(
+    problem_entry.get(), 
+    call_methods.get(), 
+    window, 
+    response_field  # Pass the response_field as an argument here
+    ))
+    submit_button.grid(row=1, column=2, padx=(10,0), sticky='e')  # Fixed by replacing pack() with grid()
 
     # Starting the GUI event loop
     window.mainloop()
