@@ -27,31 +27,39 @@ def submit_problem(problem, selected_call, window):
 def setup_gui():
     window = tk.Tk()
     window.title("Problem Submission Interface")
+    window.geometry("700x600")
 
     # Text field for the problem
-    tk.Label(window, text="Problem:").grid(row=0, column=0)
-    problem_entry = tk.Entry(window, width=50)
-    problem_entry.grid(row=0, column=1)
+    tk.Label(window, text="Problem:").grid(row=0, column=0, sticky='e')
+    problem_entry = tk.Entry(window, width=65)
+    problem_entry.grid(row=0, column=1, sticky='we')
 
     # Dropdown menu for selecting the call
-    tk.Label(window, text="Select Call:").grid(row=1, column=0)
+    tk.Label(window, text="Select Call Method: ").grid(row=1, column=0, sticky='e')
     call_methods = tk.StringVar(window)
-    call_methods.set("norag_chat")  # default value
-    call_dropdown = ttk.Combobox(window, textvariable=call_methods)
-    call_dropdown['values'] = ("norag_chat", "rag_chat", "call_rag_chat")
-    call_dropdown.grid(row=1, column=1)
+    call_methods.set(" rag_chat")  # default value
+    call_dropdown = ttk.Combobox(window, textvariable=call_methods, width=62)
+    call_dropdown['values'] = (" norag_chat", " rag_chat", " call_rag_chat")
+    call_dropdown.grid(row=1, column=1, sticky='we')
 
     # Submit button
-    submit_button = tk.Button(window, text="Submit", command=lambda: submit_problem(problem_entry.get(), call_methods.get(), window))
-    submit_button.grid(row=2, column=0, columnspan=2)
+    submit_button = tk.Button(window, text="Submit")
+    submit_button.grid(row=1, column=2, padx=(10,0), sticky='e')
+
+    # Large text field for displaying bot responses
+    response_field = tk.Text(window, height=20, width=80)  # Adjust the height and width as needed
+    response_field.grid(row=3, column=0, columnspan=3, pady=25, sticky='we')
+
+    # Configure column 1 to expand and fill space, for aligning the submit button right
+    window.grid_columnconfigure(1, weight=1)
 
     # Start the GUI event loop
     window.mainloop()
 
 config_list = [
     {
-        "model": "gpt-4",
-        "api_key": "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",
+        "model": "gpt-4-1106-preview",
+        "api_key": "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",
     },
 ]
 
@@ -83,7 +91,7 @@ boss_aid = RetrieveUserProxyAgent(
     retrieve_config={  # Configuration for content retrieval
         "task": "code",  # Type of task for content retrieval
         # URL to documentation for reference in content retrieval
-        "docs_path": "https://docs.python.org/3/reference/index.html",
+        "docs_path": "https://github.com/s76354m/NewAutoHelper/blob/main/main.py",
         "chunk_token_size": 1000,  # Token size for chunks of content
         "model": config_list[0]["model"],  # Language model to use
         "client": chromadb.PersistentClient(path="/tmp/chromadb"),  # Database client for persistent storage
