@@ -59,7 +59,7 @@ def setup_gui():
 config_list = [
     {
         "model": "gpt-4-1106-preview",
-        "api_key": "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",
+        "api_key": "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",
     },
 ]
 
